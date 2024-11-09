@@ -1,0 +1,2 @@
+# kubez
+Kubernetes manifests
