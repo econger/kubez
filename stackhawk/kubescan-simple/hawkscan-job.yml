@@ -1,0 +1,37 @@
+# A kube Job that runs a HawkScan container with a configuration map
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hawkscan-job
+  namespace: stackhawk
+spec:
+  template:
+    spec:
+      containers:
+        - name: hawkscan
+          image: stackhawk/hawkscan:latest
+          imagePullPolicy: Always
+          env:
+            - name: API_KEY # Set StackHawk API key for platform authentication
+              valueFrom:
+                secretKeyRef:
+                  name: hawkscan-secret
+                  key: api-key
+            - name: APP_ID # Set app.applicationId in /hawk/stackhawk.yml
+              valueFrom:
+                secretKeyRef:
+                  name: hawkscan-secret
+                  key: app-id
+          volumeMounts:
+            - name: hawk # Contains stackhawk.yml
+              mountPath: /hawk
+          resources:
+            limits:
+              cpu: "2"
+              memory: "6Gi"
+      restartPolicy: Never
+      volumes:
+        - name: hawk
+          configMap:
+            name: hawkscan-config # Contains stackhawk.yml
+  backoffLimit: 4

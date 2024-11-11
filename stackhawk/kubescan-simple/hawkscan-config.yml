@@ -1,0 +1,12 @@
+# A kube ConfigMap that contains the HawkScan configuration file, stackhawk.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hawkscan-config
+  namespace: stackhawk
+data:
+  stackhawk.yml: |
+    app:
+      applicationId: "${APP_ID}"
+      env: "Development"
+      host: "http://example.com"
