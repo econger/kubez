@@ -1,0 +1,4 @@
+app:
+  applicationId: "${APP_ID}"
+  env: "Development"
+  host: "http://example.com"

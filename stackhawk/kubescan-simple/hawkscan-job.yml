@@ -33,5 +33,5 @@ spec:
       volumes:
         - name: hawk
           configMap:
-            name: hawkscan-config # Contains stackhawk.yml
+            name: sh-cm.yml # Contains stackhawk.yml
   backoffLimit: 4
